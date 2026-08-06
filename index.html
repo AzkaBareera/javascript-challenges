@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Assignment - Web Interface Design</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card: #171a23;
+      --border: #262b38;
+      --accent: #5eead4;
+      --text: #e7e9ee;
+      --muted: #8b93a7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      padding: 24px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    p.sub {
+      color: var(--muted);
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    .task {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+    }
+
+    .task h2 {
+      font-size: 1rem;
+      margin: 0 0 4px 0;
+      color: var(--accent);
+    }
+
+    .task p.desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 0 0 12px 0;
+    }
+
+    input,
+    select,
+    button {
+      font-size: 0.95rem;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #0f1117;
+      color: var(--text);
+      margin: 4px 6px 4px 0;
+    }
+
+    input {
+      width: 180px;
+    }
+
+    button {
+      background: var(--accent);
+      color: #0f1117;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>JavaScript Assignment</h1>
+  <p class="sub">Web Interface Design</p>
+
+  <!-- TASK 1 -->
+  <div class="task">
+    <h2>1. Age to Days Converter</h2>
+    <p class="desc">Enter your age in years to see it converted to days.</p>
+    <div class="row">
+      <input type="number" id="age1" placeholder="Age in years">
+      <button onclick="ageToDays()">Convert</button>
+    </div>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="task">
+    <h2>2. Hours to Seconds Converter</h2>
+    <p class="desc">Enter a number of hours to see it converted to seconds.</p>
+    <div class="row">
+      <input type="number" id="hours2" placeholder="Hours">
+      <button onclick="hoursToSeconds()">Convert</button>
+    </div>
+    <div class="result" id="result2"></div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div class="task">
+    <h2>3. Find the Next Number</h2>
+    <p class="desc">Scenario A: find the number that comes right after a chosen number inside an array.<br>
+      Scenario B: type any single number (integer or float) and get the next one.</p>
+
+    <strong>Scenario A — Array based</strong>
+    <div class="row">
+      <input type="text" id="arr3" placeholder="e.g. 4,9,15,20" value="4,9,15,20">
+      <input type="number" id="target3" placeholder="Number to search">
+      <button onclick="nextInArray()">Find Next</button>
+    </div>
+    <div class="result" id="result3a"></div>
+
+    <strong>Scenario B — Single value</strong>
+    <div class="row">
+      <input type="text" id="single3" placeholder="e.g. 7 or 7.2">
+      <button onclick="nextSingleValue()">Find Next</button>
+    </div>
+    <div class="result" id="result3b"></div>
+  </div>
+
+  <!-- TASK 4 -->
+  <div class="task">
+    <h2>4. Capitalize Name</h2>
+    <p class="desc">Enter your name in lowercase only. The first letter will be capitalized automatically.</p>
+    <div class="row">
+      <input type="text" id="name4" placeholder="e.g. sarah">
+      <button onclick="capitalizeName()">Show Name</button>
+    </div>
+    <div class="result" id="result4"></div>
+  </div>
+
+  <!-- TASK 5 -->
+  <div class="task">
+    <h2>5. BMI Calculator</h2>
+    <p class="desc">Enter weight (kg) and height (m) to calculate Body Mass Index.</p>
+    <div class="row">
+      <input type="number" id="weight5" placeholder="Weight (kg)">
+      <input type="number" id="height5" placeholder="Height (m)">
+      <button onclick="calculateBMI()">Calculate</button>
+    </div>
+    <div class="result" id="result5"></div>
+  </div>
+
+  <!-- TASK 6 -->
+  <div class="task">
+    <h2>6. Random Array — First & Last Element</h2>
+    <p class="desc">Generates a random array of numbers, then picks the first and last elements.</p>
+    <div class="row">
+      <button onclick="randomArrayFirstLast()">Generate Array</button>
+    </div>
+    <div class="result" id="result6"></div>
+  </div>
+
+  <!-- TASK 7 -->
+  <div class="task">
+    <h2>7. Add Two Numbers (Event Handling)</h2>
+    <p class="desc">Type a number in the first box. Result shows NaN until the second box also has a value — then it
+      shows the sum live.</p>
+    <div class="row">
+      <input type="number" id="num1_7" placeholder="Enter First Number">
+      <input type="number" id="num2_7" placeholder="Enter Second Number">
+      <input type="text" id="result7" placeholder="Result" disabled>
+    </div>
+  </div>
+
+  <script>
+    // TASK 1: Age to Days
+    function ageToDays() {
+      const age = Number(document.getElementById('age1').value);
+      const days = age * 365;
+      document.getElementById('result1').textContent = `${age} years = ${days} days`;
+    }
+
+    // TASK 2: Hours to Seconds
+    function hoursToSeconds() {
+      const hours = Number(document.getElementById('hours2').value);
+      const seconds = hours * 3600;
+      document.getElementById('result2').textContent = `${hours} hours = ${seconds} seconds`;
+    }
+
+    // TASK 3A: Next number in an array
+    function nextInArray() {
+      const arr = document.getElementById('arr3').value.split(',').map(Number);
+      const target = Number(document.getElementById('target3').value);
+      const index = arr.indexOf(target);
+
+      if (index === -1) {
+        document.getElementById('result3a').textContent = `${target} not found in array.`;
+      } else if (index === arr.length - 1) {
+        document.getElementById('result3a').textContent = `${target} is the last element, no next number.`;
+      } else {
+        document.getElementById('result3a').textContent = `Number next to ${target} is ${arr[index + 1]}`;
+      }
+    }
+
+    // TASK 3B: Next value for a single input (integer or float)
+    function nextSingleValue() {
+      const value = document.getElementById('single3').value;
+      const num = Number(value);
+      let next;
+
+      if (Number.isInteger(num)) {
+        next = num + 1;
+      } else {
+        // for floats, increase by the smallest step matching the decimal places
+        const decimals = (value.split('.')[1] || '').length;
+        const step = 1 / Math.pow(10, decimals);
+        next = Number((num + step).toFixed(decimals));
+      }
+      document.getElementById('result3b').textContent = `Next number after ${num} is ${next}`;
+    }
+
+    // TASK 4: Capitalize name
+    function capitalizeName() {
+      const name = document.getElementById('name4').value;
+      const capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+      document.getElementById('result4').textContent = `Hello, ${capitalized}!`;
+    }
+
+    // TASK 5: BMI Calculator
+    function calculateBMI() {
+      const weight = Number(document.getElementById('weight5').value);
+      const height = Number(document.getElementById('height5').value);
+      const bmi = weight / (height * height);
+      document.getElementById('result5').textContent = `Your BMI is ${bmi.toFixed(2)}`;
+    }
+
+    // TASK 6: Random array, pick first and last
+    function randomArrayFirstLast() {
+      const length = Math.floor(Math.random() * 6) + 5; // 5 to 10 elements
+      const arr = [];
+      for (let i = 0; i < length; i++) {
+        arr.push(Math.floor(Math.random() * 100));
+      }
+      const first = arr[0];
+      const last = arr[arr.length - 1];
+      document.getElementById('result6').textContent =
+        `Array: [${arr.join(', ')}] | First: ${first} | Last: ${last}`;
+    }
+
+    // TASK 7: Live addition with event handling
+    const num1Input = document.getElementById('num1_7');
+    const num2Input = document.getElementById('num2_7');
+    const resultInput = document.getElementById('result7');
+
+    function updateSum() {
+      const a = num1Input.value;
+      const b = num2Input.value;
+
+      if (a === '' || b === '') {
+        resultInput.value = 'NaN';
+      } else {
+        resultInput.value = Number(a) + Number(b);
+      }
+    }
+
+    num1Input.addEventListener('input', updateSum);
+    num2Input.addEventListener('input', updateSum);
+  </script>
+
+</body>
+
+</html>
